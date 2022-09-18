@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "login";
+    Layout = "~/Views/account/_Layout1.cshtml";
+}
+
+
+<form>
+
+    <div class="box">
+        <div class="form">
+            <h2>SIGN IN</h2>
+            <div class="inputbox">
+                <input type="text" name="name" id="name" required="requierd">
+                <span>USERNAME</span>
+                <I></I>
+            </div>
+            <div class="inputbox">
+                <input type="password" name="password" id="password" required="requierd">
+                <span>PASSWORD</span>
+                <I></I>
+            </div>
+            <div class="links">
+                <a href="">SIGN UP</a>
+                <a href="">FORGOT PASSWORD</a>
+            </div>
+            <input type="button"  value="Login" id="submitbtn">
+
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $('#submitbtn').click(function (e) {
+        e.preventDefault();
+        var name = $('#name').val();
+        var pass = $('#password').val();
+
+
+        $.ajax({
+            type: "GET",
+            url: "@{@Url.Action("verify","account")}",
+            data: { "n": name, "p": pass },
+            success: function (result) {
+                if (result == 1) {
+                    alert("Login Successfull");
+                window.location.href = "../index";
+                } else if (result == 0) {
+                    alert("id or pass wrong");
+                }
+
+
+            },
+            error: function () {
+                alert("url not hitted");
+            }
+        });
+
+    })
+</script>
